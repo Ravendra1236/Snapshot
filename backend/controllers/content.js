@@ -21,4 +21,38 @@ const contentSubmission = async (req, res) => {
   }
 };
 
-export default contentSubmission;
+const getAllContents = async (req, res) => {
+  try {
+    const data = await Content.find();
+    res.status(200).json({
+      data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      mssg: "Something went wrong",
+      error: error,
+    });
+  }
+};
+
+const deleteContent = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const response = await Content.findByIdAndDelete(id);
+    if (!response) {
+      res.status(400).json({
+        mssg: "Content Not found.",
+      });
+    }
+    res.status(400).json({
+      mssg: "Successfully deleted.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      mssg: "Something went wrong!",
+      error: error,
+    });
+  }
+};
+
+export { contentSubmission, getAllContents, deleteContent };
