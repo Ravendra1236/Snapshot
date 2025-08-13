@@ -38,24 +38,28 @@ export const getContentShareLinkId = async (req, res) => {
   const hash = req.params.shareLink;
 
   const data = await Share.findOne({
-    hash,
+    hash
   });
+  
 
   if (!data) {
-    res.status(411).json({
+    return res.status(411).json({
       mssg: "Sorry incorrect Link",
     });
-    return;
   }
 
   const content = await Content.find({
-    userId: req.userId,
+    userId: data.userId,
+    
   });
-
+  
+  
+  
   const user = await User.findOne({
-    userId: req.userId,
+    _id: data.userId,
   });
 
+  
   if (!user) {
     return res.status(411).json({
       mssg: "User Not found, error should ideally not happen",

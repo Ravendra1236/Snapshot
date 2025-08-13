@@ -7,6 +7,6 @@ import {
 const router = express.Router();
 
 router.post("/share", authMiddleware, shareLinkGenerator);
-router.post("/share/:shareLink", authMiddleware, getContentShareLinkId);
+router.get("/share/:shareLink", getContentShareLinkId);
 const shareRouter = router;
 export default shareRouter;
