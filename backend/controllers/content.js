@@ -1,24 +1,58 @@
-import express from "express";
 import { Content } from "../models/contentSchema.js";
 
-const contentSubmission = async (req, res) => {
+export const contentSubmission = async (req, res) => {
   try {
     const { title, link, type } = req.body;
     const content = new Content({
       title,
       link,
       type,
+      userId: req.userId,
+      tags: [],
     });
     await content.save();
-    res.status(200).json({
+    return res.status(200).json({
       mssg: "Data successfully saved!",
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       mssg: "Something went wrong!",
       error: error,
     });
   }
 };
 
-export default contentSubmission;
+export const getAllContents = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const data = await Content.find({ userId: userId }).populate(
+      "userId",
+      "username"
+    );
+
+    if (data) {
+      return res.status(201).json({
+        data,
+      });
+    }
+  } catch (error) {
+    return res.satus(500).json({
+      mssg: "Something went wrong!",
+    });
+  }
+};
+
+export const deleteContent = async (req, res) => {
+  try {
+    const contentId = req.body.contentId;
+    const data = await Content.findByIdAndDelete(contentId);
+
+    return res.status(500).json({
+      mssg: "Content Deleted Successfully!",
+    });
+  } catch (error) {
+    return res.status(501).json({
+      mssg: "Something went wrong!",
+    });
+  }
+};
