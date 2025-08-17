@@ -1,5 +1,6 @@
 import CrossIcon from "../icons/CrossIcon";
 import Button from "./Button";
+import { Input } from "./Input";
 
 function ContentModal({ open, onClose }) {
   return (
@@ -14,7 +15,7 @@ function ContentModal({ open, onClose }) {
                 </div>
               </div>
               <div>
-                <Input placeholder={"Title"} />
+                <Input placeholder={"Title"}  />
                 <Input placeholder={"Link"} />
               </div>
               <div className="flex justify-center">
@@ -28,17 +29,6 @@ function ContentModal({ open, onClose }) {
   );
 }
 
-function Input({ onChange, placeholder }: { onChange: () => void }) {
-  return (
-    <div>
-      <input
-        type={"text"}
-        className="px-4 py-2 border rounded m-2"
-        onChange={onChange}
-        placeholder={placeholder}
-      />
-    </div>
-  );
-}
+
 
 export default ContentModal;
