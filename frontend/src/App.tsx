@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Button from "./components/Button";
+import Card from "./components/Card";
+import ContentModal from "./components/ContentModal";
+import AddIcon from "./icons/AddIcon";
+import ShareIcon from "./icons/ShareIcon";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [modalOpen, setModalOpen] = useState(true);
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="p-4">
+      <ContentModal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+        }}
+      ></ContentModal>
+      <div className="flex justify-end gap-4">
+        <Button
+          onClick={() => setModalOpen(true)}
+          variant="primary"
+          text="Add Content"
+          startIcon={<AddIcon />}
+        ></Button>
+        <Button
+          variant="secondary"
+          text="Share Snap"
+          startIcon={<ShareIcon />}
+        ></Button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <div className="flex gap-4">
+        <Card
+          type="twitter"
+          link="https://x.com/XDevelopers/status/1861111894100320572"
+          title="First Tweet"
+        ></Card>
 
-export default App
+        <Card
+          type="youtube"
+          link="https://www.youtube.com/watch?v=eBTBG4nda2A"
+          title="First Video"
+        ></Card>
+      </div>
+    </div>
+  );
+}
+export default App;
