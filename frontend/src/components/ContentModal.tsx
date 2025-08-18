@@ -1,8 +1,23 @@
+import { useRef, useState } from "react";
 import CrossIcon from "../icons/CrossIcon";
 import Button from "./Button";
 import { Input } from "./Input";
 
 function ContentModal({ open, onClose }) {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const linkRef = useRef<HTMLInputElement>(null);
+  const [type, setType] = useState("youtube");
+
+  enum ContentType {
+    Youtube = "youtube",
+    Twitter = "twitter",
+  }
+  function addContent() {
+    const title = titleRef.current?.value;
+    const link = linkRef.current?.value;
+
+    const [type, setType] = useState(ContentType.Youtube);
+  }
   return (
     <div>
       {open && (
@@ -15,11 +30,38 @@ function ContentModal({ open, onClose }) {
                 </div>
               </div>
               <div>
-                <Input placeholder={"Title"}  />
-                <Input placeholder={"Link"} />
+                <Input ref={titleRef} placeholder={"Title"} />
+                <Input ref={linkRef} placeholder={"Link"} />
               </div>
-              <div className="flex justify-center">
-                <Button variant="primary" text="Submit"></Button>
+              <div>
+                <h1>Type</h1>
+                <div className="flex gap-2">
+                  <Button
+                    text="Youtube"
+                    variant={
+                      type === ContentType.Youtube ? "primary" : "secondary"
+                    }
+                    onClick={() => {
+                      setType(ContentType.Youtube);
+                    }}
+                  ></Button>
+                  <Button
+                    text="Twitter"
+                    variant={
+                      type === ContentType.Twitter ? "primary" : "secondary"
+                    }
+                    onClick={() => {
+                      setType(ContentType.Twitter);
+                    }}
+                  ></Button>
+                </div>
+                <div className="flex justify-center">
+                  <Button
+                    variant="primary"
+                    text="Submit"
+                    onClick={addContent}
+                  ></Button>
+                </div>
               </div>
             </span>
           </div>
@@ -28,7 +70,5 @@ function ContentModal({ open, onClose }) {
     </div>
   );
 }
-
-
 
 export default ContentModal;

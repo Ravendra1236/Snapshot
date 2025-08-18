@@ -6,9 +6,12 @@ import userRouter from "./routes/userRoute.js";
 import contentRouter from "./routes/contentRoute.js";
 import shareRouter from "./routes/shareRoute.js";
 
+import cors from "cors";
+
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 dotenv.config();
 

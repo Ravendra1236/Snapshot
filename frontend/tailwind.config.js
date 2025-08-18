@@ -3,18 +3,19 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors : {
-        gray : {
-          100 : "#eeeeef" ,
+      colors: {
+        gray: {
+          50: "rgb(255, 0, 0, 0.5)",
+          100: "#eeeeef",
           200: "#e6e9ed",
-          600: "#95989c"
+          600: "#95989c",
         },
-        purple : {
-          200 : "#d9ddee",
-          500 : "#9492db",
-          600 : "#7164c0"
-        }
-      }
+        purple: {
+          200: "#d9ddee",
+          500: "#9492db",
+          600: "#7164c0",
+        },
+      },
     },
   },
   plugins: [],
