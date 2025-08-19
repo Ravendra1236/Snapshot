@@ -5,9 +5,11 @@ import ContentModal from "../components/ContentModal";
 import AddIcon from "../icons/AddIcon";
 import ShareIcon from "../icons/ShareIcon";
 import Sidebar from "../components/Sidebar";
+import useContent from "../hooks/useContent";
 
 function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
+  const content = useContent();
   return (
     <div>
       <Sidebar />
@@ -31,18 +33,17 @@ function Dashboard() {
             startIcon={<ShareIcon />}
           ></Button>
         </div>
-        <div className="flex gap-4">
-          <Card
-            type="twitter"
-            link="https://x.com/XDevelopers/status/1861111894100320572"
-            title="First Tweet"
-          ></Card>
-
-          <Card
-            type="youtube"
-            link="https://www.youtube.com/watch?v=eBTBG4nda2A"
-            title="First Video"
-          ></Card>
+        <div className="flex gap-4 flex-wrap mt-6">
+          {content.map(({ type, link, title }) => {
+            return (
+              <Card
+                type={type}
+                link={link}
+                title={title}
+                key={`${type}-${title}`}
+              ></Card>
+            );
+          })}
         </div>
       </div>
     </div>

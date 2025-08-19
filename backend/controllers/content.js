@@ -25,18 +25,18 @@ export const contentSubmission = async (req, res) => {
 export const getAllContents = async (req, res) => {
   try {
     const userId = req.userId;
-    const data = await Content.find({ userId: userId }).populate(
+    const content = await Content.find({ userId: userId }).populate(
       "userId",
       "username"
     );
 
-    if (data) {
-      return res.status(201).json({
-        data,
+    if (content) {
+      return res.status(200).json({
+        content,
       });
     }
   } catch (error) {
-    return res.satus(500).json({
+    return res.status(500).json({
       mssg: "Something went wrong!",
     });
   }
@@ -47,11 +47,11 @@ export const deleteContent = async (req, res) => {
     const contentId = req.body.contentId;
     const data = await Content.findByIdAndDelete(contentId);
 
-    return res.status(500).json({
+    return res.status(200).json({
       mssg: "Content Deleted Successfully!",
     });
   } catch (error) {
-    return res.status(501).json({
+    return res.status(500).json({
       mssg: "Something went wrong!",
     });
   }

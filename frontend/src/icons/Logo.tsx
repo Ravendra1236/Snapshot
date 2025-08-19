@@ -23,7 +23,7 @@ function Logo() {
       <path
         fill="#f69272"
         stroke="#b07454"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         d="M50.5,48.5L50.5,48.5c-3.866,0-7-3.134-7-7v-6 c0-3.866,3.134-7,7-7h0c3.866,0,7,3.134,7,7v6C57.5,45.366,54.366,48.5,50.5,48.5z"
       ></path>
       <path
@@ -61,9 +61,9 @@ function Logo() {
       <path
         fill="none"
         stroke="#1f212b"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-miterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
         d="M50.5,48.5L50.5,48.5 c-3.866,0-7-3.134-7-7v-6c0-3.866,3.134-7,7-7h0c3.866,0,7,3.134,7,7v6C57.5,45.366,54.366,48.5,50.5,48.5z"
       ></path>
       <path
