@@ -1,10 +1,15 @@
+import axios from "axios";
 import DeleteIcon from "../icons/DeleteIcon";
 import ShareIcon from "../icons/ShareIcon";
+import { BACKEND_URL } from "../config";
 
 interface CardProps {
   title: string;
   link: string;
   type: "youtube" | "twitter";
+  contentId: string;
+  onDelete: (contentId: string) => void;
+  isSharedView?: boolean;
 }
 
 // Function to convert YouTube URL to embed format
@@ -39,13 +44,48 @@ function getYouTubeEmbedUrl(url: string): string {
   }
 }
 
-function Card({ title, link, type }: CardProps) {
+function Card({
+  title,
+  link,
+  type,
+  contentId,
+  onDelete,
+  isSharedView = false,
+}: CardProps) {
   // Debug YouTube URL conversion
   if (type === "youtube") {
     const embedUrl = getYouTubeEmbedUrl(link);
     console.log("Original URL:", link);
     console.log("Embed URL:", embedUrl);
   }
+
+  const handleDelete = async () => {
+    // Show confirmation dialog
+    if (!window.confirm("Are you sure you want to delete this content?")) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      await axios.delete(`${BACKEND_URL}/api/v1/content`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: { contentId },
+      });
+
+      // Call the parent's onDelete to update the UI
+      onDelete(contentId);
+    } catch (error) {
+      console.error("Error deleting content:", error);
+      alert("Failed to delete content. Please try again.");
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-200 w-80 flex-shrink-0">
@@ -58,9 +98,14 @@ function Card({ title, link, type }: CardProps) {
             </div>
             <span className="truncate">{title}</span>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0 hover:text-blue-600 transition-colors cursor-pointer">
-            <DeleteIcon />
-          </div>
+          {!isSharedView && (
+            <div
+              className="flex items-center gap-2 flex-shrink-0 hover:text-blue-600 transition-colors cursor-pointer"
+              onClick={handleDelete}
+            >
+              <DeleteIcon />
+            </div>
+          )}
         </div>
 
         {/* Content */}
