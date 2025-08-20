@@ -38,9 +38,25 @@ function SignUp() {
   return (
     <div className="h-screen w-screen bg-gray-200 flex justify-center items-center">
       <div className="bg-white rounded-xl border min-w-48 p-8">
-        <Input ref={usernameRef} placeholder="Username" />
-        <Input ref={emailRef} placeholder="Email" />
-        <Input ref={passwordRef} placeholder="Password" />
+        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Username
+          </label>
+          <Input ref={usernameRef} placeholder="Username" />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Email
+          </label>
+          <Input ref={emailRef} placeholder="Email" />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Password
+          </label>
+          <Input ref={passwordRef} placeholder="Password" />
+        </div>
         <div className="pt-4 flex justify-center mb-2 ">
           <Button variant="primary" text="Signup" onClick={signup} />
         </div>

@@ -1,3 +1,4 @@
+import DeleteIcon from "../icons/DeleteIcon";
 import ShareIcon from "../icons/ShareIcon";
 
 interface CardProps {
@@ -51,24 +52,14 @@ function Card({ title, link, type }: CardProps) {
       <div className="p-4">
         {/* Header */}
         <div className="flex justify-between items-start mb-3">
-          <div className="flex items-center text-sm font-medium text-gray-900 flex-1 mr-2">
+          <div className="flex items-center text-lg font-medium text-gray-900 flex-1 mr-2">
             <div className="text-gray-500 mr-2 flex-shrink-0">
               <ShareIcon />
             </div>
             <span className="truncate">{title}</span>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-blue-600 transition-colors"
-            >
-              <ShareIcon />
-            </a>
-            <button className="text-gray-500 hover:text-gray-700 transition-colors">
-              <ShareIcon />
-            </button>
+          <div className="flex items-center gap-2 flex-shrink-0 hover:text-blue-600 transition-colors cursor-pointer">
+            <DeleteIcon />
           </div>
         </div>
 
