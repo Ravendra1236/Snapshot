@@ -17,7 +17,8 @@ interface SharedData {
 }
 
 function SharedContent() {
-  const { shareLink } = useParams<{ shareLink: string }>();
+  const params = useParams();
+  const shareLink = params.shareLink;
   const [sharedData, setSharedData] = useState<SharedData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");

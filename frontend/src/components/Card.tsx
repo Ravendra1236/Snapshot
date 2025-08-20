@@ -1,7 +1,9 @@
 import axios from "axios";
-import DeleteIcon from "../icons/DeleteIcon";
-import ShareIcon from "../icons/ShareIcon";
+import { useEffect } from "react";
 import { BACKEND_URL } from "../config";
+import YoutubeIcon from "../icons/YoutubeIcon";
+import TwitterIcon from "../icons/TwitterIcon";
+import DeleteIcon from "../icons/DeleteIcon";
 
 interface CardProps {
   title: string;
@@ -44,6 +46,17 @@ function getYouTubeEmbedUrl(url: string): string {
   }
 }
 
+// Declare Twitter widgets type extension
+declare global {
+  interface Window {
+    twttr?: {
+      widgets: {
+        load: () => void;
+      };
+    };
+  }
+}
+
 function Card({
   title,
   link,
@@ -52,6 +65,30 @@ function Card({
   onDelete,
   isSharedView = false,
 }: CardProps) {
+  // Load Twitter widgets script for Twitter embeds
+  useEffect(() => {
+    if (type === "twitter") {
+      // Check if Twitter widgets script is already loaded
+      if (!window.twttr) {
+        const script = document.createElement("script");
+        script.src = "https://platform.twitter.com/widgets.js";
+        script.async = true;
+        script.onload = () => {
+          // Refresh Twitter widgets after script loads
+          if (window.twttr && window.twttr.widgets) {
+            window.twttr.widgets.load();
+          }
+        };
+        document.head.appendChild(script);
+      } else {
+        // If script is already loaded, just refresh widgets
+        if (window.twttr.widgets) {
+          window.twttr.widgets.load();
+        }
+      }
+    }
+  }, [type]);
+
   // Debug YouTube URL conversion
   if (type === "youtube") {
     const embedUrl = getYouTubeEmbedUrl(link);
@@ -94,7 +131,8 @@ function Card({
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-center text-lg font-medium text-gray-900 flex-1 mr-2">
             <div className="text-gray-500 mr-2 flex-shrink-0">
-              <ShareIcon />
+              {type === "youtube" && <YoutubeIcon />}
+              {type === "twitter" && <TwitterIcon />}
             </div>
             <span className="truncate">{title}</span>
           </div>
@@ -122,11 +160,16 @@ function Card({
             ></iframe>
           )}
           {type === "twitter" && (
-            <div className="w-full h-full flex items-center justify-center bg-gray-100">
-              <blockquote className="twitter-tweet" data-theme="light">
+            <div className="twitter-embed-container w-full h-full overflow-hidden">
+              <blockquote
+                className="twitter-tweet h-full"
+                data-theme="light"
+                data-dnt="true"
+                data-cards="hidden"
+                data-conversation="none"
+              >
                 <a href={link.replace("x.com", "twitter.com")}></a>
               </blockquote>
-              <div className="text-gray-500 text-sm">Twitter Post</div>
             </div>
           )}
         </div>
