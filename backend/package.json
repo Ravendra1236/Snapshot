@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "type": "module",
@@ -22,5 +23,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.0",
     "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "globals": "^16.3.0"
   }
 }

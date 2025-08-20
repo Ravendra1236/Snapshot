@@ -63,6 +63,7 @@ export const signIn = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       mssg: "Something went wrong",
+      error
     });
   }
 };

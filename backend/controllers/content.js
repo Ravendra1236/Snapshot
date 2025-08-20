@@ -38,6 +38,7 @@ export const getAllContents = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       mssg: "Something went wrong!",
+      error,
     });
   }
 };
@@ -45,7 +46,7 @@ export const getAllContents = async (req, res) => {
 export const deleteContent = async (req, res) => {
   try {
     const contentId = req.body.contentId;
-    const data = await Content.findByIdAndDelete(contentId);
+    await Content.findByIdAndDelete(contentId);
 
     return res.status(200).json({
       mssg: "Content Deleted Successfully!",
@@ -53,6 +54,7 @@ export const deleteContent = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       mssg: "Something went wrong!",
+      error,
     });
   }
 };
